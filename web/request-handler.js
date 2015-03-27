@@ -21,7 +21,32 @@ exports.handleRequest = function (req, res) {
       file.pipe(res);
     }
     
+  }else if(req.method === 'POST'){
+    var dataString='';
+    req.on('data',function(chunk){
+      dataString+= chunk;
+    });
+
+    req.on('end', function() {
+      dataString = JSON.parse(dataString).url;
+
+      fs.readFile(archive.paths.list,{'encoding':'utf8'},function(error,data){
+        var sites;
+        if(!error){
+          sites = data;
+        }else{
+          sites = '';
+        }
+        sites += dataString + '\n';
+        fs.writeFile(archive.paths.list,sites,function(){
+        
+          res.writeHead(302, headerFile.headers)
+          res.end();
+        });
+
+      });
+      })
   }
 
-  // res.end(archive.paths.list);
+
 };
