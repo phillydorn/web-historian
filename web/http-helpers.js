@@ -16,6 +16,11 @@ exports.serveAssets = function(res, asset, callback) {
   readfile.pipe(res);
 };
 
+exports.serveArchives = function(res,asset){
+  var file = archive.paths.archivedSites + '/' + asset;
+  var readfile = fs.createReadStream(file);
+  readfile.pipe(res);
+}
 
 
 // As you progress, keep thinking about what helper functions you can put here!

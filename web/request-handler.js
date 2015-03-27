@@ -6,8 +6,14 @@ var headerFile = require('./http-helpers.js');
 
 exports.handleRequest = function (req, res) {
   if(req.method === 'GET' ){
-    var statusCode = 200;
-    headerFile.serveAssets(res,'/index.html');
+    if(req.url === '/'){
+      var statusCode = 200;
+     headerFile.serveAssets(res,'/index.html');  
+    }else{
+      var statusCode = 200;
+      headerFile.serveArchives(res,req.url);
+    }
+    
   }
 
   // res.end(archive.paths.list);
