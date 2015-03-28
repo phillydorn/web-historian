@@ -24,3 +24,19 @@ exports.serveArchives = function(res,asset){
 
 
 // As you progress, keep thinking about what helper functions you can put here!
+
+exports.servePage = function(res, url) {
+  // check if page exists as a file in sites
+  archive.isUrlArchived(url, function(exists) {
+    if (!exists) {
+    //send loading page
+      var statusCode = 302;
+      res.writeHead(statusCode, exports.headers);
+      exports.serveAssets(res, '/loading.html');
+    //start downloading the site
+    }
+    
+  //send to site
+    
+  })
+}
