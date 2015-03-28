@@ -24,13 +24,13 @@ exports.initialize = function(pathsObj){
 
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
-var urls = [];
+// var urls = [];
 
 
 exports.readListOfUrls = function(callback) {
   fs.readFile(this.paths.list, function (err, data) {
     if (!err) {
-      urls = (''+data).split('\n');
+      var urls = (''+data).split('\n');
       if (callback) { 
         callback(urls);
       }
@@ -39,16 +39,22 @@ exports.readListOfUrls = function(callback) {
 };
 
 exports.isUrlInList = function(url, callback){
-  var result = false;
-  for (var i = 0; i < urls.length; i++) {
-    if (urls[i] === url) {
-      result = true;
-    }
+  var urlArray;
+  this.readListOfUrls(function(urls){
+    var result = false;
+    for (var i = 0; i < urls.length; i++) {
+      if (urls[i] === url) {
+        result = true;
+      }
   }
   callback(result);
+  });
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(url, callback) {
+  this.readListOfUrls(function (){
+
+  })
 };
 
 exports.isUrlArchived = function(url){
