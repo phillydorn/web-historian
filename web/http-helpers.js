@@ -18,8 +18,9 @@ exports.serveAssets = function(res, asset, callback) {
 
 exports.serveArchives = function(res,asset){
   var file = archive.paths.archivedSites + '/' + asset;
-  var readfile = fs.createReadStream(file);
-  readfile.pipe(res);
+  console.log('file is ', file)
+  var archiveFile = fs.createReadStream(file);
+  archiveFile.pipe(res);
 }
 
 
@@ -29,14 +30,17 @@ exports.servePage = function(res, url) {
   // check if page exists as a file in sites
   archive.isUrlArchived(url, function(exists) {
     if (!exists) {
-    //send loading page
       var statusCode = 302;
       res.writeHead(statusCode, exports.headers);
       exports.serveAssets(res, '/loading.html');
-    //start downloading the site
+      var urls = [url];
+      archive.downloadUrls(urls);
     }
     
-  //send to site
+    res.writeHead(302, exports.headers);
+
+    exports.serveArchives(res, url);
+
     
   })
 }

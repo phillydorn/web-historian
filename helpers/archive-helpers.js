@@ -60,7 +60,8 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
-  fs.open(this.paths.archivedSites + url, 'r', function(err) {
+ 
+  fs.open(exports.paths.archivedSites + '/' + url, 'r', function(err) {
     if (err) {
       callback(false);
     } else {
