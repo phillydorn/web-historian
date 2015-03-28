@@ -28,13 +28,10 @@ exports.handleRequest = function (req, res) {
         res.writeHead(statusCode,headerFile.headers);
         res.end();
       });
-      //if exists in txt
-
       file.pipe(res);
     }
     
   }else if(req.method === 'POST'){
-    
     var dataString='';
     req.on('data',function(chunk){
       dataString+= chunk;
@@ -82,4 +79,3 @@ exports.handleRequest = function (req, res) {
     });
   };
 };
-        // htmlFetcher.servePage(res, dataString); 
