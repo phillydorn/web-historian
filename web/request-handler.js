@@ -56,31 +56,30 @@ exports.handleRequest = function (req, res) {
         }
         sites += dataString + '\n';
         console.log('dataString', dataString)
-        fs.writeFile(archive.paths.list,sites,function(){
-          archive.isUrlInList(dataString, function (found) {
-            if (found) {
-            // check archives - if in archives
+      
+        archive.isUrlInList(dataString, function (found) {
+          if (found) {//if in text file
+          // check archives - if in archives
             archive.isUrlArchived(dataString, function (exists) {
               if (exists) {
               //display page
                 headerFile.servePage(res, dataString)
               } else {
               //if not in archives display loading
-                
+                headerFile.serveAssets(res, '/loading.html');
               }
-
             })
-           } else { 
-          //if not in text 
+          } else { //if not in text 
             //append to text
-            //display loading
-            }
+            archive.addUrlToList(dataString, function() {
+              //no op?
           })
-          //no op
-        });
+          //display loading
+          headerFile.serveAssets(res, '/loading.html');
+          }
+        })
       });
-      
     });
-  }
+  };
 };
         // htmlFetcher.servePage(res, dataString); 
