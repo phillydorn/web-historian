@@ -11,12 +11,14 @@ exports.headers = headers = {
 };
 
 exports.serveAssets = function(res, asset, callback) {
+  console.log('serving assets')
   var file = archive.paths.siteAssets + asset;
   var readfile = fs.createReadStream(file);
   readfile.pipe(res);
 };
 
 exports.serveArchives = function(res,asset){
+  console.log()
   var file = archive.paths.archivedSites + '/' + asset;
   console.log('file is ', file)
   var archiveFile = fs.createReadStream(file);
@@ -27,20 +29,24 @@ exports.serveArchives = function(res,asset){
 // As you progress, keep thinking about what helper functions you can put here!
 
 exports.servePage = function(res, url) {
+  exports.serveArchives(res, url);
+
+  
   // check if page exists as a file in sites
-  archive.isUrlArchived(url, function(exists) {
-    if (!exists) {
-      var statusCode = 302;
-      res.writeHead(statusCode, exports.headers);
-      exports.serveAssets(res, '/loading.html');
-      var urls = [url];
-      archive.downloadUrls(urls);
-    }
+  // archive.isUrlArchived(url, function(exists) {
+  //   console.log('exists' , exists)
+  //   if (!exists) {
+  //     var statusCode = 302;
+  //     res.writeHead(statusCode, exports.headers);
+  //     headerFile.serveAssets(res, '/loading.html');
+  //     console.log('done serving')
+  //     var urls = [url];
+  //     archive.downloadUrls(urls);
+  //   } else {
     
-    res.writeHead(302, exports.headers);
+  //   res.writeHead(302, exports.headers);
 
-    exports.serveArchives(res, url);
-
+  //   }
     
-  })
+  // })
 }
