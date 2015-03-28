@@ -30,9 +30,7 @@ var urls = [];
 exports.readListOfUrls = function(callback) {
   fs.readFile(this.paths.list, function (err, data) {
     if (!err) {
-      console.log(''+data)
       urls = (''+data).split('\n');
-      console.log(urls)
       if (callback) { 
         callback(urls);
       }
@@ -40,7 +38,14 @@ exports.readListOfUrls = function(callback) {
   });
 };
 
-exports.isUrlInList = function(){
+exports.isUrlInList = function(url, callback){
+  var result = false;
+  for (var i = 0; i < urls.length; i++) {
+    if (urls[i] === url) {
+      result = true;
+    }
+  }
+  callback(result);
 };
 
 exports.addUrlToList = function(){
