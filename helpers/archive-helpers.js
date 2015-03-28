@@ -39,7 +39,6 @@ exports.readListOfUrls = function(callback) {
 };
 
 exports.isUrlInList = function(url, callback){
-  var urlArray;
   this.readListOfUrls(function(urls){
     var result = false;
     for (var i = 0; i < urls.length; i++) {
@@ -52,18 +51,15 @@ exports.isUrlInList = function(url, callback){
 };
 
 exports.addUrlToList = function(url, callback) {
-  this.readListOfUrls(function (){
-
+  fs.appendFile (this.paths.list, url+'\n', function (err) {
+    if (!err) {
+      callback();
+    }
   })
 };
 
-exports.isUrlArchived = function(url){
-  var doesExist;
-  fs.exists(this.paths.archivedSites + url,function(exists){
-    doesExist = exists;
-  });
-  return doesExist;
-};
+exports.isUrlArchived = function(){
+ }
 
 exports.downloadUrls = function(){
 };
