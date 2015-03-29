@@ -22,5 +22,5 @@ exports.downloadFiles = function() {
 
     }
   });
-}
+}();
 

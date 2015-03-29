@@ -1,6 +1,5 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
-var request = require('http-request');
 var headerFile = require('./http-helpers.js');
 var url = require('url');
 var fs = require('fs');
@@ -51,9 +50,7 @@ exports.handleRequest = function (req, res) {
         }else{
           sites = '';
         }
-        sites += dataString + '\n';
-        console.log('dataString', dataString)
-      
+        sites += dataString + '\n';      
         archive.isUrlInList(dataString, function (found) {
           if (found) {//if in text file
           // check archives - if in archives
